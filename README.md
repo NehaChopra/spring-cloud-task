@@ -1,0 +1,2 @@
+# spring-cloud-task
+Sample Examples of Spring Cloud Data Flow is a toolkit for building data integration and real-time data processing pipelines.    Pipelines consist of Spring Boot apps, built using the Spring Cloud Stream or Spring Cloud Task microservice frameworks. This makes Spring Cloud Data Flow suitable for a range of data processing use cases, from import/export to event streaming and predictive analytics.
