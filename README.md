@@ -33,3 +33,9 @@ java -jar spring-cloud-dataflow-server-local-1.3.0.M2.jar \
         --spring.rabbitmq.port=5672 \
         --spring.rabbitmq.username=guest \
         --spring.rabbitmq.password=guest
+
+
+
+https://docs.spring.io/spring-cloud-task/1.1.1.RELEASE/reference/htmlsingle/#features-task-configurer
+
+
