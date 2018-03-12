@@ -25,13 +25,18 @@ public class SpringCloudRestPayloadInitiatorApplication {
 	
 	@RequestMapping(path="/taskLauncher", method=RequestMethod.GET)
 	public String publishTask(@RequestParam("commandArgs") String commandArgs){
-		String uri = "maven://scotch.io:logger-batch-task:jar:0.0.1-SNAPSHOT";
-		String args[] = commandArgs.split(",");
-		List<String> commandArgsList = new ArrayList<>();
-		commandArgsList.add("1");
-		commandArgsList.add("2");
-		TaskLaunchRequest request = new TaskLaunchRequest(uri, commandArgsList, null, null, "TaskLauncher");
-		source.output().send(new GenericMessage<TaskLaunchRequest>(request));
+		int i = 0;
+		while(i == 0) {
+			String uri = "maven://scotch.io:logger-batch-task:jar:0.0.1-SNAPSHOT";
+			String args[] = commandArgs.split(",");
+			List<String> commandArgsList = new ArrayList<>();
+//			commandArgsList.add("1");
+//			commandArgsList.add("2");
+			TaskLaunchRequest request = new TaskLaunchRequest(uri, null, null, null, "TaskLauncher");
+			source.output().send(new GenericMessage<TaskLaunchRequest>(request));
+			i++;
+			break;
+		}
 		return "Success";
 	}
 	

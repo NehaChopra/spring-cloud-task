@@ -12,3 +12,4 @@ public class SpringCloudTaskLauncherApplication {
 		SpringApplication.run(SpringCloudTaskLauncherApplication.class, args);
 	}
 }
+	

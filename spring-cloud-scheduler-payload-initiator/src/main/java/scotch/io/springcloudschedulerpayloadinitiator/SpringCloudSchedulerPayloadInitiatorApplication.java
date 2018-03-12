@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class SpringCloudSchedulerPayloadInitiatorApplication {
-
+    
 	public static void main(String[] args) {
 		SpringApplication.run(SpringCloudSchedulerPayloadInitiatorApplication.class, args);
 	}
