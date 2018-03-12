@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.springframework.cloud.stream.messaging.Source;
 
@@ -37,7 +39,11 @@ public class ScheduledTasks {
 		List<String> commandArgsList = new ArrayList<>();
 		commandArgsList.add("TaskRequest");
 		commandArgsList.add("Arguments.......");
-		TaskLaunchRequest request = new TaskLaunchRequest(uri, commandArgsList, null, null, "TaskLauncher");
+		Map<String, String> deploymentProperties = new HashMap<String, String>();
+//		deploymentProperties.put("javaOpts", "-Xms152m");
+//		deploymentProperties.put("spring.cloud.deployer.nomad.javaOpts", "-Xms152m");
+		deploymentProperties.put("spring.cloud.deployer.memory", "152");
+		TaskLaunchRequest request = new TaskLaunchRequest(uri, commandArgsList, null, deploymentProperties, "TaskLauncher");
 		source.output().send(new GenericMessage<TaskLaunchRequest>(request));
 		logger.info("Finished the scheduled task Fixed Rate Task with Initial Delay :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
 	}
