@@ -22,11 +22,7 @@ public class PersonService {
 
   private static final Log logger = LogFactory.getLog(LoggerJobConfiguration.class);	
 	
-  @Autowired
-  private JdbcTemplate jdbcTemplate;
-  
-
-	 public List<Person> getAllPerson(){
+	 public List<Person> getAllPerson(JdbcTemplate jdbcTemplate){
 		    return jdbcTemplate.query("SELECT * FROM person", new RowMapper<Person>(){
 
 		      public Person mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -38,7 +34,7 @@ public class PersonService {
 		    });
 	 }
 	 
-	public void insert(Person customer){
+	public void insert(Person customer, JdbcTemplate jdbcTemplate){
 	
 		String sql = "INSERT INTO person " +
 				"(first_name, last_name) VALUES (?, ?)";

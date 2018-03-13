@@ -94,13 +94,12 @@ public class LoggerJobConfiguration implements CommandLineRunner {
 						@Override
 						public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 							logger.info("LoggerJob Job LoggerJobStep Step is running .............");
-							for(Person p : personService.getAllPerson()){
+							for(Person p : personService.getAllPerson(jdbcTemplate)){
 								logger.info("jdbcTemplate....." + jdbcTemplate);
-								logger.info("LoggerJob Job  values ......." + p.toString());
 								logger.info("Connection datatsoruce ........."+jdbcTemplate.getDataSource().getConnection());
+								logger.info("datatsoruce ........."+jdbcTemplate.getDataSource());
 								
-								
-								personService.insert(customer);
+								personService.insert(customer, jdbcTemplate);
 								
 								}
 							return RepeatStatus.FINISHED;
