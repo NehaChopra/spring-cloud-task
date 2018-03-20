@@ -50,17 +50,7 @@ public class LoggerJobConfiguration implements CommandLineRunner {
 	 PersonService personService;	
 	 
 	 Person customer;
-	 
-	 List<Person> persons = new ArrayList<Person>();
-//	
-//	@Bean
-//	@Primary
-//	@ConfigurationProperties(prefix="test.datasource")
-//	public DataSource testDatasource(){
-//		DataSource testDatasource = (DataSource) DataSourceBuilder.create().build();
-//		logger.info("spring.secondDatasource.............. "+testDatasource);
-//	    return testDatasource;
-//	}
+
 	@Override
 	public void run(String... strings) throws Exception {
 		logger.info("Task Payload Values.............. ");
@@ -72,17 +62,6 @@ public class LoggerJobConfiguration implements CommandLineRunner {
 				customer.setFirstName(ele);
 				customer.setLastName(ele);
 			}
-			
-//			JSONObject jObj = new JSONObject(ele.trim().toString());
-//			Iterator<?> keys = jObj.keys();
-
-//			while( keys.hasNext() ) {
-//			  String key = (String)keys.next();
-//			  if ( jObj.get(key) instanceof JSONObject ) { 
-//				logger.info(jObj.getString(key));
-//			    System.out.println(jObj.getString(key));
-//			  }
-//			}
 		}
 	}
 	
