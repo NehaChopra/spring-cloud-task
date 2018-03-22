@@ -1,0 +1,17 @@
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<appender name="ROLLIN_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %logger{36}.%M\(%L\) : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}</pattern>
+		</encoder>
+		<file>/alog/springCloudTask/springCloudTask.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>/alog/springCloudTask/springCloudTask-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxFileSize>1GB</maxFileSize>
+		</rollingPolicy>
+	</appender>
+	<root level="INFO">
+		<appender-ref ref="ROLLIN_FILE" />
+	</root>
+</configuration>

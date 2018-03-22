@@ -52,15 +52,39 @@ public class ScheduledTasks {
 		
 		List<String> commandArgsList = new ArrayList<>();
 		Map<String, String> deploymentProperties = new HashMap<String, String>();
-//			deploymentProperties.put("javaOpts", "-Xms152m");
-//			deploymentProperties.put("spring.cloud.deployer.nomad.javaOpts", "-Xms152m");
 		deploymentProperties.put("spring.cloud.deployer.memory", "152");
+		
 		for(Person p : personService.getAllPerson()){
 		  commandArgsList.add(p.toString());
 		}
 		
-		TaskLaunchRequest request = new TaskLaunchRequest(uri, commandArgsList, null, deploymentProperties, "TaskLauncher");
+		TaskLaunchRequest request = new TaskLaunchRequest(uri, commandArgsList, null, createDeploymentProperties(), "LoggerTask");
 		source.output().send(new GenericMessage<TaskLaunchRequest>(request));
 		logger.info("Finished the scheduled task Fixed Rate Task with Initial Delay :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
 	}
+	
+	private Map<String, String> createDeploymentProperties() {
+		  Map<String, String> deploymentProperties = new HashMap<>();
+		  deploymentProperties.put("spring.cloud.deployer.memory", "512");
+		  deploymentProperties.put("server.port", "9595");
+//		  deploymentProperties.put("deployer.log.count", "2");
+			/*
+			//deploymentProperties.put("javaOpts", "-Xms152m");
+			//deploymentProperties.put("spring.cloud.deployer.nomad.javaOpts", "-Xms152m");
+			*/
+			
+		  return deploymentProperties;
+	}
+	
+	private Map<String, String> createEnvironmentProperties() {
+		  Map<String, String> environmentProperties = new HashMap<>();
+//			environmentProperties.put("spring.datasource.url", "jdbc:mysql://localhost:3306/springTask");
+//			environmentProperties.put("spring.datasource.driver-class-name", "com.mysql.jdbc.Driver");
+//			environmentProperties.put("spring.datasource.username", "root");
+//			environmentProperties.put("spring.datasource.password", "root");
+			
+		  return environmentProperties;
+	}
 }
+
+

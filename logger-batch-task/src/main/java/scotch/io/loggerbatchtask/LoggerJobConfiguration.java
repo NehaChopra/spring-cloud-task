@@ -2,6 +2,7 @@ package scotch.io.loggerbatchtask;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,12 +30,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.mysql.jdbc.Connection;
 
-
-
 @Configuration
 public class LoggerJobConfiguration implements CommandLineRunner {
 	private static final Log logger = LogFactory.getLog(LoggerJobConfiguration.class);
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
+	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	
+	Person customer;
+	
 	
 	@Autowired
 	public JobBuilderFactory jobBuilderFactory;
@@ -42,22 +45,16 @@ public class LoggerJobConfiguration implements CommandLineRunner {
 	@Autowired
 	public StepBuilderFactory stepBuilderFactory;
 	
-	
-	 @Autowired
-	 private JdbcTemplate jdbcTemplate;	 
+	@Autowired
+	PersonService personService;	
 	 
-	 @Autowired
-	 PersonService personService;	
-	 
-	 Person customer;
-
 	@Override
 	public void run(String... strings) throws Exception {
-		logger.info("Task Payload Values.............. ");
-		for(String ele : strings) {
-			if ( ele.startsWith("{")) {
+		logger.info("Task Payload Values.............. " + strings);
+		
+		if(strings != null) {
+			for(String ele : strings) {
 				logger.info("hello.........." +ele);
-				
 				customer = new Person();
 				customer.setFirstName(ele);
 				customer.setLastName(ele);
@@ -73,7 +70,7 @@ public class LoggerJobConfiguration implements CommandLineRunner {
 						@Override
 						public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 							logger.info("LoggerJob Job LoggerJobStep Step is running .............");
-							personService.insert(customer, jdbcTemplate);
+							personService.insert(customer);
 							logger.info("Finished LoggerJob Job LoggerJobStep Step is running .............");
 							return RepeatStatus.FINISHED;
 						}
@@ -83,3 +80,21 @@ public class LoggerJobConfiguration implements CommandLineRunner {
 	}
 	
 }
+
+
+
+
+//@Bean
+//public CustomizedTaskConfigurer getTaskConfigurer()
+//{
+//  return new CustomizedTaskConfigurer(dataSource);
+//}
+//
+//@Bean
+//@Primary
+//@ConfigurationProperties(prefix="test.datasource")
+//public DataSource testDatasource(){
+//	DataSource testDatasource = (DataSource) DataSourceBuilder.create().build();
+//	logger.info("spring.secondDatasource.............. "+testDatasource);
+//  return testDatasource;
+//}
