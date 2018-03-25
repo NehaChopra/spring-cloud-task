@@ -3,36 +3,16 @@ Sample Examples of Spring Cloud Data Flow is a toolkit for building data integra
 
 
 
+Run the Spring cloud dataflow server for UI modification:
 
-java -jar spring-cloud-dataflow-server-local-1.3.1.RELEASE.jar      --spring.datasource.url="jdbc:mysql://localhost/springcloud"     --spring.datasource.username="root"     --spring.datasource.password="root"     --spring.datasource.driver-class-name="org.mariadb.jdbc.Driver" --spring.rabbitmq.host="localhost:5672" --spring.rabbitmq.port="5672" --spring.rabbitmq.username="guest" --spring.rabbitmq.password="guest"
-
-
-
-
-
-java -jar spring-cloud-dataflow-shell-1.3.1.RELEASE.jar --spring.datasource.url="jdbc:mysql://localhost/springTask"     --spring.datasource.username="root"     --spring.datasource.password="root"     --spring.datasource.driver-class-name="org.mariadb.jdbc.Driver" --spring.rabbitmq.host="localhost:5672" --spring.rabbitmq.port="5672" --spring.rabbitmq.username="guest" --spring.rabbitmq.password="guest"
+java -jar spring-cloud-dataflow-server-local-1.3.1.RELEASE.jar
+--spring.datasource.url="jdbc:mysql://localhost/springTask" --spring.datasource.username="root" --spring.datasource.password="root" --spring.datasource.driver-class-name="org.mariadb.jdbc.Driver" 
 
 
-app register --name loggerTask --type task --uri maven://scotch.io:logger-batch-task:jar:0.0.1-SNAPSHOT
+Requirement:
+1. RabbitMQ
+2. mysql ()
 
-task create loggerTask --definition loggerTask
-
-
-
-
-task create myjob --definition batch-job
-
-
-
-java -jar spring-cloud-dataflow-server-local-1.3.0.M2.jar \
-        --spring.datasource.url=jdbc:postgresql://localhost:5432/<database-name> \
-        --spring.datasource.username=<username> \
-        --spring.datasource.password=<password> \
-        --spring.datasource.driver-class=org.postgresql.Driver \
-        --spring.rabbitmq.host=127.0.0.1 \
-        --spring.rabbitmq.port=5672 \
-        --spring.rabbitmq.username=guest \
-        --spring.rabbitmq.password=guest
 
 
 
