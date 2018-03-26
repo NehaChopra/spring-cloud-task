@@ -1,6 +1,5 @@
 package scotch.io.springcloudschedulerpayloadinitiator;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,16 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.activation.DataSource;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.messaging.support.GenericMessage;
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.cloud.task.configuration.EnableTask;
 import org.springframework.cloud.task.launcher.TaskLaunchRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.messaging.support.GenericMessage;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -31,12 +33,17 @@ public class ScheduledTasks {
 
 	@Autowired
 	private Source source;
+		 
+	@Autowired
+	PersonService personService;	 
+
+	@Autowired
+	@Qualifier("dsTest")
+	private DataSource testDataSource;
 	
-	 @Autowired
-	 private JdbcTemplate jdbcTemplate;	 
-	 
-	 @Autowired
-	 PersonService personService;	 
+	@Autowired
+	@Qualifier("dsTask")
+	private DataSource taskDataSource;
 	 
 	 
 	@Scheduled(fixedRate = 2000, initialDelay = 5000)
@@ -46,6 +53,9 @@ public class ScheduledTasks {
 
 	public void scheduleTaskWithInitialDelay() throws SQLException {
 		    
+		logger.info("test datasource .......{} ", testDataSource);
+		logger.info("task datasource .......{} ", taskDataSource);
+
 		logger.info("Fixed Rate Task with Initial Delay :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
 		
 		String uri = "maven://scotch.io:logger-batch-task:jar:0.0.1-SNAPSHOT";
